@@ -1,28 +1,27 @@
 /** @format */
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/navbar/Navbar";
-import HomePage from "./pages/home/HomePage";
-import Resource from "./pages/resource/Resource";
-import AboutPage from "./pages/about/AboutPage";
-import Footer from "./components/footer/Footer";
-import FooterBottom from "./components/footer/FooterBottom";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import MainLayout from "./components/MainLayout";
+import HomePage from "./pages/HomePage";
+import PageNotFound from "./pages/PageNotFound";
+import Investments from "./pages/Investments";
 
 function App() {
-  return (
-    <Router>
-      <div className="flex flex-col min-h-screen bg-[#ffff] text-slate-300">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/resource" element={<Resource />} />
-        </Routes>
-        <Footer className="mt-auto" />
-        <FooterBottom />
-      </div>
-    </Router>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/investments" element={<Investments />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Route>
+    )
   );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
